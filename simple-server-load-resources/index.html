@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Simple Server with View</title>
+
+        <link rel="stylesheet" href="style.css">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <header class="header">
+            <div class="container">
+                <h1 class="header--title">Simple Server</h1>
+            </div>
+        </header>
+
+        <main class="container main-content">
+            <div class="code-editor">
+                <h2 class="code-editor--title">Server</h2>
+                <pre class="code-editor--content">
+                    <code class="prettyprint">
+var http = require('http');
+var fs = require('fs');
+var path = require('path');
+
+http.createServer((req, res) => {
+
+    // Get URL
+    var filePath = req.url;
+    if ('/' == filePath) {
+        filePath = './index.html';
+    } else {
+        filePath = '.' + filePath;
+    }
+
+    // Get Extension for MIME
+    var extName = path.extname(filePath);
+    var contentType = 'text/html';
+    switch(extName) {
+        case '.js':
+            contentType = 'text/javascript';
+            break;
+        case '.css':
+            contentType = 'text/css';
+            break;
+    }
+
+    // Load resources
+    fs.exists(filePath, function(exists) {
+        if (exists) {
+            fs.readFile(filePath, (err, content) => {
+                if (err) {
+                    res.writeHead(500);
+                    res.end();
+                } else {
+                    res.writeHead(200, {'Content-Type': contentType});
+                    res.end(content, 'utf-8');
+                }
+            });
+        } else {
+            res.writeHead(404);
+            res.end();
+        }
+    });
+}).listen(8000);
+                    </code>
+                </pre>
+            </div>
+        </main>
+
+        <main class="container main-content">
+            <div class="code-editor">
+                <h2 class="code-editor--title">Solution</h2>
+                <pre class="code-editor--content">
+                    <code class="prettyprint">
+/**
+ * Get Extension for MIME
+ *
+ * @author: Eric Sowell
+ * @url: http://ericsowell.com/blog/2011/5/6/serving-static-files-from-node-js
+ */
+var extName = path.extname(filePath);
+var contentType = 'text/html';
+switch(extName) {
+    case '.js':
+        contentType = 'text/javascript';
+        break;
+    case '.css':
+        contentType = 'text/css';
+        break;
+}
+                    </code>
+                </pre>
+            </div>
+        </main>
+
+        <script src="prettify.js"></script>
+    </body>
+</html>

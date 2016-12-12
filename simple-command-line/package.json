@@ -1,0 +1,14 @@
+{
+  "name": "simple-command-line",
+  "version": "1.0.0",
+  "description": "searches for files",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "namvh <vhnam2504@gmail.com>",
+  "license": "ISC",
+  "preferGlobal": true,
+  "bin": {
+    "filesearch": "index.js"
+  }
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Simple Server with View</title>
+
+        <link rel="stylesheet" href="view/style.css">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <header class="header">
+            <div class="container">
+                <h1 class="header--title">Simple Server</h1>
+            </div>
+        </header>
+
+        <div class="header--space"></div>
+
+        <main class="container">
+            <div class="code-editor">
+                <h2 class="code-editor--title">Server</h2>
+                <pre class="code-editor--content">
+                    <code class="prettyprint">
+var http = require('http');
+var fs = require('fs');
+
+http.createServer((req, res) => {
+    fs.readFile('./view/index.html', (err, content) => {
+        if (err) {
+            res.writeHead(500);
+            res.end();
+        } else {
+            res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'});
+            res.end(content, 'utf-8');
+        }
+    });
+}).listen(8000);
+                    </code>
+                </pre>
+            </div>
+        </main>
+
+        <script src="view/prettify.js"></script>
+    </body>
+</html>

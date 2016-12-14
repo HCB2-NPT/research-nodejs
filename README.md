@@ -6,10 +6,11 @@ Seminar: New Programming Technologies
 * simple-server-with-view
 * simple-server-load-resources
 * simple-command-line
+* restapi-express
 
 ## Database
 * musicstore.json
 
 ## Technologies
-* Node.js - version 6.9.2 LTS
-* MongoDB
+* Node.js - 6.9.2 LTS
+* MongoDB - 3.4.0

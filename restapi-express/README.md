@@ -1,15 +1,20 @@
 # restapi-express
 
 ## Installation
+
+MongoDB
 ```
-# MongoDB
 use MusicStore
 db.createCollection('Album')
+```
 
-# Command Promt
+Command Promt
+```
 mongoimport -d MusicStore -c Album --file album.json
+```
 
-# Config project
+Config project
+```
 npm install
 ```
 
@@ -21,3 +26,6 @@ npm start
 ## Packages
 * express
 * mongooes
+* body-parser
+* cors
+* morgan

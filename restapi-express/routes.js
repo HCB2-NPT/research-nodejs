@@ -12,7 +12,8 @@ exports.getAlbums = (req, res, next) => {
 
 // Get by ObjectId
 exports.getAlbum = (req, res, next) => {
-    albumModel.find({ '_id': ObjectId(req.params.album) }, (err, docs) => {
+    let id = req.params.album;
+    albumModel.find({ '_id': ObjectId(id) }, (err, docs) => {
         if (err) return next(err);
 
         res.send(docs);
@@ -21,5 +22,44 @@ exports.getAlbum = (req, res, next) => {
 
 // Create an album
 exports.insertAlbum = (req, res, next) => {
-    // TODO
+    let album = new albumModel(req.body);
+    album.save((err) => {
+        if (err) return next(err);
+
+        res.status(201).end();
+    });
+};
+
+// Update album
+exports.updateAlbum = (req, res, next) => {
+    let id = req.params.album;
+    let album = req.body;
+    albumModel.findByIdAndUpdate({ '_id': ObjectId(id) }, album, (err, docs) => {
+        if (err) return next(err);
+
+        res.status(204).end();
+    });
+};
+
+// Update partial album
+exports.updatePartialAlbum = (req, res, next) => {
+    let id = req.params.album;
+    let album = req.body;
+    albumModel.findByIdAndUpdate({ '_id': ObjectId(id) }, album, (err, docs) => {
+        if (err) return next(err);
+
+        res.status(204).end();
+    });
+};
+
+// Delete album
+exports.deleteAlbum = (req, res, next) => {
+    let id = req.params.album;
+    albumModel.remove({
+        '_id': ObjectId(id)
+    }, (err, docs) => {
+        if (err) return next(err);
+
+        res.status(204).end();
+    });
 };

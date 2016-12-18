@@ -4,11 +4,13 @@ var requestHandlers = require("./requestHandlers");
 
 var handle = {}
 handle["/"] = requestHandlers.all;
-handle["/start"] = requestHandlers.start;
+handle["/new_alb"] = requestHandlers.new_alb;
 handle["/upload"] = requestHandlers.upload;
 handle["/add"] = requestHandlers.add;
 handle["/update"] = requestHandlers.update;
-handle["/delete"] = requestHandlers.delete_a;
+handle["/edit_alb"] = requestHandlers.edit_alb;
+handle["/delete_alb"] = requestHandlers.delete_alb;
+handle["/delete_confirm_alb"] = requestHandlers.delete_confirm_alb;
 handle["/all"] = requestHandlers.all;
 
 server.start(router.route, handle);

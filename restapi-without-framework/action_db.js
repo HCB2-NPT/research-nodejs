@@ -4,7 +4,7 @@ var MongoClient = require('mongodb').MongoClient
 // Connection URL
 var url = 'mongodb://localhost:27017/album';
 
-function start_db(act, data_return, data) {
+function start_db(act, callback, data) {
 	// debugger;
 	data = data || null;
 	// Use connect method to connect to the server
@@ -16,13 +16,23 @@ function start_db(act, data_return, data) {
 	  {
 	    case "add":
 		console.log("data: " + data);
-		insertDocuments(db, function() {
+		// {
+		//     album:"Kobukovu",
+		//     artist:"Đen",
+		//     tracks: [
+		//     	{"name":"Mơ"},{"name":"Cô gái bàn bên"}
+		//     ]
+		// };
+
+		insertDocuments(db, data, function(success) {
+		  console.log("success: " + success);
 		  db.close();
+		  return callback(success);
 		});
 	    break;
 	    case "delete":
 		  console.log("data: " + data);
-		  removeDocument(db, function() {
+		  removeDocument(db, data, function() {
 		    db.close();
 		  });
 	    break;
@@ -36,8 +46,8 @@ function start_db(act, data_return, data) {
 		  console.log("data: " + data);
 		  findDocuments(db, function(data_r) {
 		  	console.log("data_r: " + JSON.stringify(data_r));
-	    		data_return = JSON.stringify(data_r);
 		    	db.close();
+		    	return callback(data_r);
 		  });
 	    break;
 	  }
@@ -80,7 +90,7 @@ function start_db(act, data_return, data) {
 	});
 };
 
-var insertDocuments = function(db, callback) {
+var insertDocuments = function(db, data, callback) {
   // Get the documents collection
   var collection = db.collection('albums');
   /*
@@ -97,17 +107,12 @@ var insertDocuments = function(db, callback) {
   */
 
   collection.insertOne(
-    album:"Kobukovu",
-    artist:"Đen",
-    tracks: [
-    	{"name":"Mơ"},{"name":"Cô gái bàn bên"}
-    ]
-    }
+    data
   , function(err, result) {
     assert.equal(err, null);
     assert.equal(1, result.insertedCount);
     console.log("Inserted 1 documents into the collection");
-    callback(result);
+    callback(true);
   });
 }
 
@@ -139,23 +144,23 @@ var updateDocument = function(db, callback) {
   // Get the documents collection
   var collection = db.collection('albums');
   // Update document where a is 2, set b equal to 1
-  collection.updateOne({ album : "Kobukovu" }
-    , { $set: { album : "Kobukovu1" } }, function(err, result) {
+  collection.updateOne({ _id : data._id }
+    , { $set: data }, function(err, result) {
     assert.equal(err, null);
     assert.equal(1, result.result.n);
-    console.log("Updated the document with the field a equal to 2");
+    console.log("Updated the document with the field a equal to 1");
     callback(result);
   });  
 }
 
-var removeDocument = function(db, callback) {
+var removeDocument = function(db, data, callback) {
   // Get the documents collection
   var collection = db.collection('albums');
   // Insert some documents
-  collection.deleteOne({ album : "Kobukovu" }, function(err, result) {
+  collection.deleteOne(data, function(err, result) {
     assert.equal(err, null);
     assert.equal(1, result.result.n);
-    console.log("Removed the document with the field a equal to 3");
+    console.log("Removed the document with the field a equal to 1");
     callback(result);
   });    
 }

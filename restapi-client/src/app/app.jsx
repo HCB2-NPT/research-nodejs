@@ -5,4 +5,4 @@ import Main from './Main.jsx';
 
 injectTapEventPlugin();
 
-render(<Main />, document.getElementById('app'));
+render(<Main />, document.getElementById('main-app'));

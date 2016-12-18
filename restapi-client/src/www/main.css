@@ -12,3 +12,41 @@ body {
     width: 1140px;
     margin: 32px auto;
 }
+
+.tracks-list {
+    height: 340px;
+    overflow-y: auto;
+    margin-top: 36px;
+}
+
+.tracks-title {
+    color: #0c6 !important;
+}
+
+.btn-delete {
+    display: block;
+    margin-top: 8px;
+    color: #F44336;
+    text-decoration: none;
+    font-size: .7rem;
+}
+
+.tracks-table thead tr th:first-child,
+.tracks-table tbody tr td:first-child {
+    display: none;
+}
+
+.btn-insert {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+}
+
+.textbox {
+    width: 90%;
+    resize: none;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    outline: aquamarine;
+    padding: 8px;
+}

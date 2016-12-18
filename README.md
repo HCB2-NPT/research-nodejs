@@ -8,6 +8,7 @@ Seminar: New Programming Technologies
 * simple-command-line
 * restapi-express
 * restapi-without-framework
+* restapi-client
 
 ## Database
 * musicstore.json

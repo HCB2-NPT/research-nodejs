@@ -1,11 +1,11 @@
 var MongoClient = require('mongodb').MongoClient
-  , assert = require('assert');
-
+  , assert = require('assert')
+  , mongoose = require('mongoose');
 // Connection URL
 var url = 'mongodb://localhost:27017/album';
 
 function start_db(act, callback, data) {
-	// debugger;
+	debugger;
 	data = data || null;
 	// Use connect method to connect to the server
 	MongoClient.connect(url, function(err, db) {
@@ -32,14 +32,25 @@ function start_db(act, callback, data) {
 	    break;
 	    case "delete":
 		  console.log("data: " + data);
-		  removeDocument(db, data, function() {
+		  removeDocument(db, data, function(success) {
+		    console.log("success: " + success);
 		    db.close();
+		    return callback(success);
 		  });
 	    break;
 	    case "update":
 		  console.log("data: " + data);
-		  updateDocument(db, function() {
+		  updateDocument(db, data, function(success) {
+		    console.log("success: " + success);
 		    db.close();
+		    return callback(success);
+		  });
+	    break;
+	    case "find":
+		  console.log("data : " + data);
+		  findDocumentsFilter(db, data, function(data_r) {
+		    db.close();
+		    return callback(data_r);
 		  });
 	    break;
 	    default:
@@ -128,40 +139,49 @@ var findDocuments = function(db, callback) {
   });
 }
 
-var findDocumentsFilter = function(db, callback) {
+var findDocumentsFilter = function(db, data, callback) {
   // Get the documents collection
   var collection = db.collection('albums');
   // Find some documents
-  collection.find({'a': 3}).toArray(function(err, docs) {
+  collection.find( { _id: mongoose.Types.ObjectId(data._id) }).toArray(function(err, docs) {
     assert.equal(err, null);
+    debugger;
     console.log("Found the following records");
-    console.log(docs);
+    // console.log(docs);
     callback(docs);
   });      
 }
 
-var updateDocument = function(db, callback) {
+var updateDocument = function(db, data, callback) {
   // Get the documents collection
   var collection = db.collection('albums');
   // Update document where a is 2, set b equal to 1
-  collection.updateOne({ _id : data._id }
-    , { $set: data }, function(err, result) {
+  debugger;
+  data_tmp = {
+        album: data.album,
+        artist: data.artist,
+        tracks: data.tracks
+   };
+  collection.updateOne( 
+  	{ _id : mongoose.Types.ObjectId(data._id) }
+    , { $set: data_tmp }, function(err, result) {
     assert.equal(err, null);
     assert.equal(1, result.result.n);
     console.log("Updated the document with the field a equal to 1");
-    callback(result);
+    callback(true);
   });  
 }
 
 var removeDocument = function(db, data, callback) {
+	debugger;
   // Get the documents collection
   var collection = db.collection('albums');
   // Insert some documents
-  collection.deleteOne(data, function(err, result) {
+  collection.deleteOne( { _id: mongoose.Types.ObjectId(data._id) }, function(err, result) {
     assert.equal(err, null);
     assert.equal(1, result.result.n);
     console.log("Removed the document with the field a equal to 1");
-    callback(result);
+    callback(true);
   });    
 }
 

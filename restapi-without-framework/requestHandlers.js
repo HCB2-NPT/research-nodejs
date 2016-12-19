@@ -2,8 +2,8 @@ var action_db = require("./action_db");
 var exec = require("child_process").exec;
 
 var querystring = require("querystring"); //,
-/*			fs = require("fs"),
-			formidable = require("formidable");
+/*          fs = require("fs"),
+            formidable = require("formidable");
 */
 
 function new_alb(response, postData) {
@@ -17,19 +17,19 @@ function new_alb(response, postData) {
     var content = "emtry";
 
     //exec("ls -lah", function(error, stdout, stderr){
-    //	sleep(10000);
-    //	content = stdout;
-    //	response.writeHead(200,  {"Content-Type" : "text/plain"});
-    //	response.write(stdout);
-    //	response.end();
+    //  sleep(10000);
+    //  content = stdout;
+    //  response.writeHead(200,  {"Content-Type" : "text/plain"});
+    //  response.write(stdout);
+    //  response.end();
     //});
 
-    /*	
+    /*
     exec("find /", {timeout: 10000, maxBuffer: 20000*1024 }, function(error, stdout, stderr){
-    	content = stdout;
-    	response.writeHead(200,  {"Content-Type" : "text/plain"});
-    	response.write(stdout);
-    	response.end();
+        content = stdout;
+        response.writeHead(200,  {"Content-Type" : "text/plain"});
+        response.write(stdout);
+        response.end();
     });
     */
 
@@ -48,12 +48,12 @@ function new_alb(response, postData) {
         '</br>' +
         '<input type="text" name="artist" />' +
         '</br>' +
-        /*	
+        /*
         '<label name = "name_tracks">Name Tracks</label>'+
         '</br>'+
-        '<input type="text" name="name_tracks" />'+ 
+        '<input type="text" name="name_tracks" />'+
         '</br>'+
-        '<textarea name="artist" rows="20" cols="60"></textarea>'+ 
+        '<textarea name="artist" rows="20" cols="60"></textarea>'+
         '</br>'+
         */
         '<label name = "name_tracks">Name Tracks</label>' +
@@ -389,40 +389,40 @@ function all(response, postData) {
 
     //response.write("You've sent: " + querystring.parse(postData).name_tracks);
     // exec("find ./", {timeout: 10000, maxBuffer: 20000*1024 }, function(error, stdout, stderr){
-    // 	// console.log("data_return2: " + data_return);
+    //  // console.log("data_return2: " + data_return);
 
-    // 	// data_return.forEach(function(item, index) {
-    // 	// tmp = '    <td>' + item.album + '</td>'+
-    // 	// '    <td>' + item.album + '</td>'+
-    // 	// '    <td>' + '    <ul>';
-    // 	// 	item.tracks.forEach(function(item2, index) {
-    // 	// 		 '    <li>' + item2.name + '</li>';
-    // 	// 		//+
-    // 	// 		//'    <li>' + item.album + '</li>'+
-    // 	// 		//'    <li>' + item.tracks + '</li></ul>'+
-    // 	// 	});
-    // 	// '</ul>'	+ '</td>';
-    // 	// });
+    //  // data_return.forEach(function(item, index) {
+    //  // tmp = '    <td>' + item.album + '</td>'+
+    //  // '    <td>' + item.album + '</td>'+
+    //  // '    <td>' + '    <ul>';
+    //  //  item.tracks.forEach(function(item2, index) {
+    //  //       '    <li>' + item2.name + '</li>';
+    //  //      //+
+    //  //      //'    <li>' + item.album + '</li>'+
+    //  //      //'    <li>' + item.tracks + '</li></ul>'+
+    //  //  });
+    //  // '</ul>'  + '</td>';
+    //  // });
 
-    // 	// var body = '<html>'+
-    // 	// '<head>'+
-    // 	// '<meta http-equiv="Content-Type" content="text/html; '+
-    // 	// 'charset=UTF-8" />'+
-    // 	// '</head>'+
-    // 	// '<body>'+
-    // 	// '<table style="width:100%">'+
-    // 	// '  <tr>'+
-    // 	// '    <th>Album</th>'+
-    // 	// '    <th>Artist</th> '+
-    // 	// '    <th>Name Tracks</th>'+
-    // 	// '  </tr>'+
-    // 	// '  <tr>'+ tmp + '  </tr>'+
-    // 	// '</table>'+
-    // 	// '</body>'+
-    // 	// '</html>';
-    // 	// response.write(body);
+    //  // var body = '<html>'+
+    //  // '<head>'+
+    //  // '<meta http-equiv="Content-Type" content="text/html; '+
+    //  // 'charset=UTF-8" />'+
+    //  // '</head>'+
+    //  // '<body>'+
+    //  // '<table style="width:100%">'+
+    //  // '  <tr>'+
+    //  // '    <th>Album</th>'+
+    //  // '    <th>Artist</th> '+
+    //  // '    <th>Name Tracks</th>'+
+    //  // '  </tr>'+
+    //  // '  <tr>'+ tmp + '  </tr>'+
+    //  // '</table>'+
+    //  // '</body>'+
+    //  // '</html>';
+    //  // response.write(body);
 
-    // 	// response.end();
+    //  // response.end();
     // });
 
 
@@ -432,13 +432,13 @@ function all(response, postData) {
     // // tmp = '    <td>' + item.album + '</td>'+
     // // '    <td>' + item.album + '</td>'+
     // // '    <td>' + '    <ul>';
-    // // 	item.tracks.forEach(function(item2, index) {
-    // // 		 '    <li>' + item2.name + '</li>';
-    // // 		//+
-    // // 		//'    <li>' + item.album + '</li>'+
-    // // 		//'    <li>' + item.tracks + '</li></ul>'+
-    // // 	});
-    // // '</ul>'	+ '</td>';
+    // //   item.tracks.forEach(function(item2, index) {
+    // //        '    <li>' + item2.name + '</li>';
+    // //       //+
+    // //       //'    <li>' + item.album + '</li>'+
+    // //       //'    <li>' + item.tracks + '</li></ul>'+
+    // //   });
+    // // '</ul>'   + '</td>';
     // // });
 
     // var body = '<html>'+

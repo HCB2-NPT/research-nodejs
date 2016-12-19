@@ -2,103 +2,103 @@ var MongoClient = require('mongodb').MongoClient
   , assert = require('assert')
   , mongoose = require('mongoose');
 // Connection URL
-var url = 'mongodb://localhost:27017/album';
+var url = 'mongodb://localhost/MusicStore';
 
 function start_db(act, callback, data) {
-	debugger;
-	data = data || null;
-	// Use connect method to connect to the server
-	MongoClient.connect(url, function(err, db) {
-	  assert.equal(null, err);
-	  console.log("Connected successfully to server");
+    debugger;
+    data = data || null;
+    // Use connect method to connect to the server
+    MongoClient.connect(url, function(err, db) {
+      assert.equal(null, err);
+      console.log("Connected successfully to server");
 
-	  switch(act)
-	  {
-	    case "add":
-		console.log("data: " + data);
-		// {
-		//     album:"Kobukovu",
-		//     artist:"Đen",
-		//     tracks: [
-		//     	{"name":"Mơ"},{"name":"Cô gái bàn bên"}
-		//     ]
-		// };
+      switch(act)
+      {
+        case "add":
+        console.log("data: " + data);
+        // {
+        //     album:"Kobukovu",
+        //     artist:"Đen",
+        //     tracks: [
+        //      {"name":"Mơ"},{"name":"Cô gái bàn bên"}
+        //     ]
+        // };
 
-		insertDocuments(db, data, function(success) {
-		  console.log("success: " + success);
-		  db.close();
-		  return callback(success);
-		});
-	    break;
-	    case "delete":
-		  console.log("data: " + data);
-		  removeDocument(db, data, function(success) {
-		    console.log("success: " + success);
-		    db.close();
-		    return callback(success);
-		  });
-	    break;
-	    case "update":
-		  console.log("data: " + data);
-		  updateDocument(db, data, function(success) {
-		    console.log("success: " + success);
-		    db.close();
-		    return callback(success);
-		  });
-	    break;
-	    case "find":
-		  console.log("data : " + data);
-		  findDocumentsFilter(db, data, function(data_r) {
-		    db.close();
-		    return callback(data_r);
-		  });
-	    break;
-	    default:
-		  console.log("data: " + data);
-		  findDocuments(db, function(data_r) {
-		  	console.log("data_r: " + JSON.stringify(data_r));
-		    	db.close();
-		    	return callback(data_r);
-		  });
-	    break;
-	  }
+        insertDocuments(db, data, function(success) {
+          console.log("success: " + success);
+          db.close();
+          return callback(success);
+        });
+        break;
+        case "delete":
+          console.log("data: " + data);
+          removeDocument(db, data, function(success) {
+            console.log("success: " + success);
+            db.close();
+            return callback(success);
+          });
+        break;
+        case "update":
+          console.log("data: " + data);
+          updateDocument(db, data, function(success) {
+            console.log("success: " + success);
+            db.close();
+            return callback(success);
+          });
+        break;
+        case "find":
+          console.log("data : " + data);
+          findDocumentsFilter(db, data, function(data_r) {
+            db.close();
+            return callback(data_r);
+          });
+        break;
+        default:
+          console.log("data: " + data);
+          findDocuments(db, function(data_r) {
+            console.log("data_r: " + JSON.stringify(data_r));
+                db.close();
+                return callback(data_r);
+          });
+        break;
+      }
 
-	  /*
-	  insertDocuments(db, function() {
-	    db.close();
-	  });
-	  */
+      /*
+      insertDocuments(db, function() {
+        db.close();
+      });
+      */
 
-	  /*
-	  findDocuments(db, function() {
-	    db.close();
-	  });
-	  */
-	  
-	  /*
-	  updateDocument(db, function() {
-	    db.close();
-	  });
-	  */  
+      /*
+      findDocuments(db, function() {
+        db.close();
+      });
+      */
+      
+      /*
+      updateDocument(db, function() {
+        db.close();
+      });
+      */  
 
-	  /*
-	  removeDocument(db, function() {
-	    db.close();
-	  });
-	  */
-	  
-	  /*
-	  indexCollection(db, function() {
-	    db.close();
-	  });
-	  */
+      /*
+      removeDocument(db, function() {
+        db.close();
+      });
+      */
+      
+      /*
+      indexCollection(db, function() {
+        db.close();
+      });
+      */
 
-	  /*
-	  insertDocuments(db, function() {
-	    db.close();
-	  });
-	  */
-	});
+      /*
+      insertDocuments(db, function() {
+        db.close();
+      });
+      */
+    });
 };
 
 var insertDocuments = function(db, data, callback) {
@@ -163,7 +163,7 @@ var updateDocument = function(db, data, callback) {
         tracks: data.tracks
    };
   collection.updateOne( 
-  	{ _id : mongoose.Types.ObjectId(data._id) }
+    { _id : mongoose.Types.ObjectId(data._id) }
     , { $set: data_tmp }, function(err, result) {
     assert.equal(err, null);
     assert.equal(1, result.result.n);
@@ -173,7 +173,7 @@ var updateDocument = function(db, data, callback) {
 }
 
 var removeDocument = function(db, data, callback) {
-	debugger;
+    debugger;
   // Get the documents collection
   var collection = db.collection('albums');
   // Insert some documents

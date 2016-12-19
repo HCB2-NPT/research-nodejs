@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --config webpack-dev-server.config.js --progress --inline --colors",
     "build": "webpack --config webpack-production.config.js --progress --colors"
   },
-  "author": "",
+  "author": "Nam H. Vo",
   "license": "ISC",
   "dependencies": {
     "material-ui": "^0.16.5",

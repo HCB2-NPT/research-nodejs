@@ -72,14 +72,47 @@ function new_alb(response, postData) {
     //return content;
 }
 
+function blocking(response, postData) {
+    console.log("Request handler 'blocking1' was called");
+
+    function sleep(milliSeconds) {
+        var startTime = new Date().getTime();
+        while (new Date().getTime() < startTime + milliSeconds);
+    }
+
+    sleep(10000);
+    response.writeHead(200, { "Content-Type": "text/plain" });
+    response.write("blocking");
+    response.end();
+}
+
+function non_blocking(response, postData) {
+    console.log("Request handler 'non_blocking' was called");
+
+    function sleep(milliSeconds) {
+        var startTime = new Date().getTime();
+        while (new Date().getTime() < startTime + milliSeconds);
+    }
+
+    var content = "emtry";
+
+    sleep(10000);
+    exec("find /", { timeout: 10000, maxBuffer: 20000 * 1024 }, function(error, stdout, stderr) {
+        // content = stdout;
+        response.writeHead(200, { "Content-Type": "text/plain" });
+        response.write("non-blocking");
+        response.end();
+    });
+}
+
 function upload(response, postData) {
     console.log("Request handler 'upload' was called");
     //return "Hello upload";
     response.writeHead(200, { "Content-Type": "text/plain" });
-    response.write("You've sent: " + querystring.parse(postData).name_tracks);
+    // response.write("You've sent: " + querystring.parse(postData).name_tracks);
 
-    action_db.start_db("add");
-
+    // action_db.start_db("add");
+    response.write("Hello upload!");
     response.end();
 }
 
@@ -119,14 +152,14 @@ function add(response, postData) {
         }
 
         var body = '<html>' +
-        '<head>' +
-        '<meta http-equiv="Content-Type" content="text/html; ' +
-        'charset=UTF-8" />' +
-        '</head>' +
-        '<body>' +
-        tb+
-        '<br />'+
-        '<a href="/">' + "Về trang chủ " + '</a>';
+            '<head>' +
+            '<meta http-equiv="Content-Type" content="text/html; ' +
+            'charset=UTF-8" />' +
+            '</head>' +
+            '<body>' +
+            tb +
+            '<br />' +
+            '<a href="/">' + "Về trang chủ " + '</a>';
         '</body>' +
         '</html>';
 
@@ -172,16 +205,16 @@ function delete_alb(response, postData) {
         } else {
             tb = "Album Deleted Error!";
         }
-        
+
         var body = '<html>' +
-        '<head>' +
-        '<meta http-equiv="Content-Type" content="text/html; ' +
-        'charset=UTF-8" />' +
-        '</head>' +
-        '<body>' +
-        tb+
-        '<br />'+
-        '<a href="/">' + "Về trang chủ " + '</a>';
+            '<head>' +
+            '<meta http-equiv="Content-Type" content="text/html; ' +
+            'charset=UTF-8" />' +
+            '</head>' +
+            '<body>' +
+            tb +
+            '<br />' +
+            '<a href="/">' + "Về trang chủ " + '</a>';
         '</body>' +
         '</html>';
 
@@ -265,16 +298,16 @@ function update(response, postData) {
         } else {
             tb = "Album Updated Error!";
         }
-        
+
         var body = '<html>' +
-        '<head>' +
-        '<meta http-equiv="Content-Type" content="text/html; ' +
-        'charset=UTF-8" />' +
-        '</head>' +
-        '<body>' +
-        tb+
-        '<br />'+
-        '<a href="/">' + "Về trang chủ " + '</a>';
+            '<head>' +
+            '<meta http-equiv="Content-Type" content="text/html; ' +
+            'charset=UTF-8" />' +
+            '</head>' +
+            '<body>' +
+            tb +
+            '<br />' +
+            '<a href="/">' + "Về trang chủ " + '</a>';
         '</body>' +
         '</html>';
 
@@ -295,6 +328,14 @@ function all(response, postData) {
     var tmp = '';
     // debugger;
     action_db.start_db("all", function(response_db_all) {
+        // Đoạn code cho bạn hỏi cái non-blocking trong database lúc thuyết trình mình quên copy hàm sleep vào nên lỗi
+        // function sleep(milliSeconds) {
+        //     var startTime = new Date().getTime();
+        //     while (new Date().getTime() < startTime + milliSeconds);
+        // }
+        // sleep(10000);
+        // end non-blocking for db
+
         data_return = response_db_all;
         console.log("type of data_return: " + typeof data_return);
 
@@ -430,3 +471,5 @@ exports.delete_alb = delete_alb;
 exports.edit_alb = edit_alb;
 exports.update = update;
 exports.all = all;
+exports.blocking = blocking;
+exports.non_blocking = non_blocking;

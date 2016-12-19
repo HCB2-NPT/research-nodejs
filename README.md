@@ -11,7 +11,7 @@ Seminar: New Programming Technologies
 * restapi-client
 
 ## Database
-* musicstore.json
+* album.json
 
 ## Technologies
 * Node.js - 6.9.2 LTS
